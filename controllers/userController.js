@@ -14,7 +14,9 @@ module.exports = {
   async getSingleUser(req, res) {
     try {
       const user = await User.findOne({ _id: req.params.userId })
-        .select('-__v');
+        .select('-__v')
+        .populate('thoughts')
+        .populate('friends');
 
       if (!user) {
         return res.status(404).json({ message: 'No user with that ID' });
@@ -38,7 +40,7 @@ module.exports = {
   async updateUser(req, res) {
     try {
       const user = await User.findOneAndUpdate({ _id: req.params.userId });
-      
+
 // TODO: need to pass the req.body? make it update the user which will be returned/displayed?
 
       if (!user) {

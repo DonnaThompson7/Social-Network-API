@@ -39,9 +39,11 @@ module.exports = {
   // Update a user 
   async updateUser(req, res) {
     try {
-      const user = await User.findOneAndUpdate({ _id: req.params.userId });
-
-// TODO: need to pass the req.body? make it update the user which will be returned/displayed?
+      const user = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $set: req.body },
+        { runValidators: true, new: true }
+        );
 
       if (!user) {
         return res.status(404).json({ message: 'No user with that ID' });

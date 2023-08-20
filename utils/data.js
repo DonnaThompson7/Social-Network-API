@@ -1,66 +1,21 @@
 const names = [
-  'Aaran',
-  'Aaren',
-  'Aarez',
-  'Aarman',
   'Aaron',
-  'Aaron-James',
-  'Aarron',
-  'Aaryan',
-  'Aaryn',
-  'Aayan',
-  'Aazaan',
-  'Abaan',
-  'Abbas',
-  'Abdallah',
-  'Abdalroof',
-  'Abdihakim',
-  'Abdirahman',
-  'Abdisalam',
-  'Abdul',
-  'Abdul-Aziz',
-  'Abdulbasir',
-  'Abdulkadir',
-  'Abdulkarem',
-  'Smith',
+  'Jacob',
+  'Gail',
+  'Marie',
+  'David',
+  'Chef42',
+  'codeWarrior',
+  'speedRacer',
+  'mightyDuck',
+  'salsaDancer',
   'Jones',
-  'Ze',
-  'Zechariah',
-  'Zeek',
-  'Zeeshan',
-  'Zeid',
-  'Zein',
-  'Zen',
-  'Zendel',
-  'Zenith',
-  'Zennon',
-  'Zeph',
-  'Zerah',
-  'Zhen',
-  'Zhi',
-  'Zhong',
   'Zhuo',
-  'Zi',
-  'Zidane',
-  'Zijie',
-  'Zinedine',
-  'Zion',
-  'Zishan',
-  'Ziya',
-  'Ziyaan',
-  'Zohaib',
-  'Zohair',
-  'Zoubaeir',
-  'Zubair',
-  'Zubayr',
-  'Zuriel',
   'Xander',
   'Jared',
   'Grace',
   'Alex',
   'Mark',
-  'Tamar',
-  'Farish',
   'Sarah',
   'Nathaniel',
   'Parker',
@@ -110,9 +65,21 @@ const users = [];
 // Get a random item given an array
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-// Gets a random username
 const getRandomName = () =>
   getRandomArrItem(names);
+
+// Function to generate 20 users that we can add to the database. 
+const getUsers = () => {
+  let results = [];
+  for (let i = 0; i < 20; i++) {
+    results.push({
+      username: names[i],
+      email: names[i] + '@email.com',
+      // TODO: will need to add friends with several users
+    });
+  }
+  return results;
+};
 
 // Function to generate random thoughts that we can add to the database. Includes thought reactions.
 const getRandomThoughts = (int) => {
@@ -143,4 +110,4 @@ const getThoughtReactions = (int) => {
 };
 
 // Export the functions for use in seed.js
-module.exports = { getRandomName, getRandomThoughts };
+module.exports = { getUsers, getRandomThoughts };

@@ -30,15 +30,12 @@ module.exports = {
         { $addToSet: { thoughts: thought._id } },
         { new: true }
       );
-// If user is not found, give an error msg
       if (!user) {
         return res.status(404).json({
           message: 'Thought created, but found no user with that ID',
         })
       }
-// else give a success msg
       res.json('Created the thought 🎉');
-// if the whole createThought threw an error, pass that error back
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
@@ -78,7 +75,7 @@ module.exports = {
 
       if (!user) {
         return res.status(404).json({
-          message: 'Thought created but no user with this id!',
+          message: 'Thought deleted but no user with this id!',
         });
       }
 

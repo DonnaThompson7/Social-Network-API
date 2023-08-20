@@ -53,7 +53,6 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-
   // Delete a user and associated thoughts
   async deleteUser(req, res) {
     try {

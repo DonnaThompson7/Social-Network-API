@@ -1,6 +1,6 @@
 const connection = require('../config/connection');
 const { User, Thought } = require('../models');
-const { getUsers, getRandomThoughts } = require('./data');
+const { getUsers, getThoughts } = require('./data');
 
 connection.on('error', (err) => err);
 
@@ -18,13 +18,38 @@ connection.once('open', async () => {
   }
 
   const users = getUsers();
-  const thoughts = getRandomThoughts(10);
+  const thoughts = getThoughts();
 
-  await User.collection.insertMany(users);
+  // create the 18 thoughts
   await Thought.collection.insertMany(thoughts);
 
-  // TODO: what does this comment mean?
-  // loop through the saved thoughts, for each thought we need to generate a thought response and insert the thought responses
+  // create the 18 users; will add thoughts and friends in next step, after users are created 
+  for (let i = 0; i < 18; i++) {
+    await User.collection.insertOne({
+      username: users[i].username,
+      email: users[i].email,
+      // thoughts: thoughts[i],
+    });
+  }
+
+  // Assign each user to have one User friend (cannot be themselves) and one thought
+  for (let i = 0; i < 18; i++) {
+    const friend = await User.findOne({ "username": users[(17 - i)].username });
+    const userThought = await Thought.findOneAndUpdate({ "thoughtText": thoughts[i].thoughtText },
+        { username: users[i].username},
+        // { createdAt: this.createdAtFormatted }
+      );
+
+    // trying to update createdAt to formatted string, like in demo
+// await Thought.findByIdAndUpdate(userThought._id, { createdAt: userThought.createdAtFormatted.toISOString() }, {runValidators: false});
+// userThought.createdAt = userThought.createdAtFormatted;
+// await userThought.save();
+
+    const user = await User.findOneAndUpdate({ "username": users[i].username },
+        { $addToSet: { thoughts: userThought._id, friends: friend._id } }
+        );
+  }
+  
   console.table(users);
   console.table(thoughts);
   console.info('Seeding complete! 🌱');

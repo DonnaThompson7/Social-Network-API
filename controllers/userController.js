@@ -15,8 +15,10 @@ module.exports = {
     try {
       const user = await User.findOne({ _id: req.params.userId })
         .select('-__v')
-        .populate('thoughts')
-        .populate('friends');
+        // these cause 500 Internal Server Error
+        // .populate('thoughts')
+        // .populate('friends')
+        ;
 
       if (!user) {
         return res.status(404).json({ message: 'No user with that ID' });
@@ -68,4 +70,43 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+// addFriend
+async addFriend(req, res) {
+  try {
+    const friend = await User.findOne({ _id: req.params.friendId })
+    if (!friend) {
+      return res.status(404).json({ message: 'No friend with that ID' });
+    }
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.params.friendId } },
+      { new: true }
+      );
+    if (!user) {
+      return res.status(404).json({ message: 'No user with that ID' });
+    }
+    res.json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+},
+
+// removeFriend
+async removeFriend(req, res) {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } },
+      { new: true }
+      );
+
+    if (!user) {
+      return res.status(404).json({ message: 'No user with that ID' });
+    }
+    res.json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+},
+
 };

@@ -90,11 +90,9 @@ module.exports = {
         { $addToSet: { reactions: req.body } },
         { runValidators: true, new: true }
       );
-
       if (!thought) {
         return res.status(404).json({ message: 'No thought with this id!' });
       }
-
       res.json(thought);
     } catch (err) {
       res.status(500).json(err);

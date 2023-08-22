@@ -15,9 +15,8 @@ module.exports = {
     try {
       const user = await User.findOne({ _id: req.params.userId })
         .select('-__v')
-        // these cause 500 Internal Server Error
-        // .populate('thoughts')
-        // .populate('friends')
+        .populate('thoughts')
+        .populate('friends')
         ;
 
       if (!user) {

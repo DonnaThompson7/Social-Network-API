@@ -25,6 +25,7 @@ module.exports = {
   async createThought(req, res) {
     try {
       const thought = await Thought.create(req.body);
+      // Will use username to find User, since username is unique
       const user = await User.findOneAndUpdate(
         { username: req.body.username },
         { $addToSet: { thoughts: thought._id } },
@@ -35,9 +36,8 @@ module.exports = {
           message: 'Thought created, but found no user with that username',
         })
       }
-      res.json('Created the thought 🎉');
+      res.json('Created the thought and added it to the user🎉');
     } catch (err) {
-      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -55,7 +55,6 @@ module.exports = {
 
       res.json(thought);
     } catch (err) {
-      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -85,7 +84,6 @@ module.exports = {
   },
   async addReaction(req, res) {
     try {
-      console.log(req.body);
       const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
         { $addToSet: { reactions: req.body } },

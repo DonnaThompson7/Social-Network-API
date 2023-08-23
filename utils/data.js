@@ -1,3 +1,5 @@
+//I chose to create seed data for users, thoughts and reactions, that can be used for testing.
+
 const names = [
   'Aaron',
   'Jacob',
@@ -85,7 +87,6 @@ const getThoughts = () => {
     results.push({
       thoughtText: thoughtTextExamples[i],
       // username and reactions get assigned later
-      // reactions: [...getThoughtReactions(3)],
     });
   }
   return results;

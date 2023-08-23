@@ -1,6 +1,6 @@
 const connection = require('../config/connection');
 const { User, Thought } = require('../models');
-const { getUsers, getThoughts } = require('./data');
+const { getUsers, getThoughts, getThoughtReactions } = require('./data');
 
 connection.on('error', (err) => err);
 
@@ -17,36 +17,31 @@ connection.once('open', async () => {
     await connection.dropCollection('users');
   }
 
+  // get some random-generated data from data.js for seeding
   const users = getUsers();
   const thoughts = getThoughts();
 
-  // create the 18 thoughts
+  // create 18 thoughts
   await Thought.collection.insertMany(thoughts);
 
-  // create 18 users  (will add thoughts and friends in next step, after users are created)
+  // create 18 users  (will give user one thought and one friend later, after users are created)
   for (let i = 0; i < 18; i++) {
     await User.collection.insertOne({
       username: users[i].username,
       email: users[i].email,
-      // thoughts: thoughts[i],
     });
   }
 
   for (let i = 0; i < 18; i++) {
-    // Ensure the friend obj id is valid
+    // Ensure randomly selected username points to a valid user (this becomes the 'friend')
     const friend = await User.findOne({ "username": users[(17 - i)].username });
-    // Assign the correct user.username to thought.username
+    // Assign username to thought plus give it 3 random reactions
     const userThought = await Thought.findOneAndUpdate({ "thoughtText": thoughts[i].thoughtText },
-        { username: users[i].username},
-        // { createdAt: this.createdAtFormatted }
+        { username: users[i].username,
+          reactions: [...getThoughtReactions(3)] }
       );
 
-    // tried to update createdAt to formatted string, like in demo
-// await Thought.findByIdAndUpdate(userThought._id, { createdAt: userThought.createdAtFormatted.toISOString() }, {runValidators: false});
-// userThought.createdAt = userThought.createdAtFormatted;
-// await userThought.save();
-
-    // Assign each user to have one User friend (cannot be themselves) and one thought
+    // Assign each user to have one User friend (cannot be themselves) and one Thought
     const user = await User.findOneAndUpdate({ "username": users[i].username },
         { $addToSet: { thoughts: userThought._id, friends: friend._id } }
         );

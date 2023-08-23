@@ -84,8 +84,8 @@ const getThoughts = () => {
   for (let i = 0; i < 18; i++) {
     results.push({
       thoughtText: thoughtTextExamples[i],
-      // username gets assigned later
-      reactions: [...getThoughtReactions(3)],
+      // username and reactions get assigned later
+      // reactions: [...getThoughtReactions(3)],
     });
   }
   return results;
@@ -104,4 +104,4 @@ const getThoughtReactions = (int) => {
 };
 
 // Export the functions for use in seed.js
-module.exports = { getUsers, getThoughts };
+module.exports = { getUsers, getThoughts, getThoughtReactions };

@@ -23,7 +23,7 @@ connection.once('open', async () => {
   // create the 18 thoughts
   await Thought.collection.insertMany(thoughts);
 
-  // create the 18 users; will add thoughts and friends in next step, after users are created 
+  // create 18 users  (will add thoughts and friends in next step, after users are created)
   for (let i = 0; i < 18; i++) {
     await User.collection.insertOne({
       username: users[i].username,
@@ -32,19 +32,21 @@ connection.once('open', async () => {
     });
   }
 
-  // Assign each user to have one User friend (cannot be themselves) and one thought
   for (let i = 0; i < 18; i++) {
+    // Ensure the friend obj id is valid
     const friend = await User.findOne({ "username": users[(17 - i)].username });
+    // Assign the correct user.username to thought.username
     const userThought = await Thought.findOneAndUpdate({ "thoughtText": thoughts[i].thoughtText },
         { username: users[i].username},
         // { createdAt: this.createdAtFormatted }
       );
 
-    // trying to update createdAt to formatted string, like in demo
+    // tried to update createdAt to formatted string, like in demo
 // await Thought.findByIdAndUpdate(userThought._id, { createdAt: userThought.createdAtFormatted.toISOString() }, {runValidators: false});
 // userThought.createdAt = userThought.createdAtFormatted;
 // await userThought.save();
 
+    // Assign each user to have one User friend (cannot be themselves) and one thought
     const user = await User.findOneAndUpdate({ "username": users[i].username },
         { $addToSet: { thoughts: userThought._id, friends: friend._id } }
         );

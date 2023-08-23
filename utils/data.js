@@ -84,7 +84,7 @@ const getThoughts = () => {
   for (let i = 0; i < 18; i++) {
     results.push({
       thoughtText: thoughtTextExamples[i],
-      // username: getRandomArrItem(names),
+      // username gets assigned later
       reactions: [...getThoughtReactions(3)],
     });
   }
@@ -93,9 +93,6 @@ const getThoughts = () => {
 
 // Create the reactions that will be added to each thought
 const getThoughtReactions = (int) => {
-  if (int === 1) {
-    return getRandomArrItem(possibleReactions);
-  }
   const results = [];
   for (let i = 0; i < int; i++) {
     results.push({

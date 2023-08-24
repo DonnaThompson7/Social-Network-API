@@ -3,7 +3,7 @@
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
   ## **Description**
-  This API is for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. This API uses MongoDB, which is a popular choice for many social networks due to its speed with large amounts of data and flexibility with unstructured data. Users have a real-time count of friends, and thoughts have a count of reactions. When selecting data, the created date is formatted for readability.
+  This API is for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. This API uses MongoDB, which is a popular choice for many social networks due to its speed with large amounts of data and flexibility with unstructured data. Users have a real-time count of friends, and thoughts have a count of reactions. When selecting data, the createdAt date is formatted for readability.
 
   ## **Table of Contents:**
   * [Technology Used](#technology-used)
@@ -45,7 +45,9 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 ```
 
   ## **Social Network API walkthrough video**
- [Social Network API walkthrough video](https://drive.google.com/file/d/1sd0DZ71WP5YB_F7cxTcQ1N4MVcCdgwWv/view)
+ [Social Network API walkthrough video](https://drive.google.com/file/d/1EDUYvRzdx0dizC0coljoE-DTttkQ2v2V/view)
+  
+  (**Note: If you receive an error message of "Couldn't preview file", then you can download the video, in order to play it. Alternatively, you can paste the URL directly in a new browser tab, and it will play.)
 
   ## **Test Cases**
   Start the app on localhost. 

@@ -45,9 +45,9 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 ```
 
   ## **Social Network API walkthrough video**
- [Social Network API walkthrough video](https://drive.google.com/file/d/1EDUYvRzdx0dizC0coljoE-DTttkQ2v2V/view)
+ [Social Network API walkthrough video](https://drive.google.com/file/d/1-mnCKAtcUFmLaX7K0Uz0DN1NjrW9OZnV/view)
   
-  (**Note: If you receive an error message of "Couldn't preview file", then you can download the video, in order to play it. Alternatively, you can paste the URL directly in a new browser tab, and it will play.)
+  (**Note: If you receive an error message of "Couldn't preview file", then open the video link in a Chrome browser window. Alternatively, you can download the video and play it.)
 
   ## **Test Cases**
   Start the app on localhost. 
